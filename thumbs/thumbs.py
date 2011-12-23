@@ -160,6 +160,7 @@ class ImageWithThumbsField(ImageField):
         self.sizes = sizes
         super(ImageField, self).__init__(**kwargs)
 
+
 """
 South Introspection rules
 """
@@ -172,7 +173,7 @@ add_introspection_rules([
             "sizes": ["sizes", {}],
         },
     ),
-], ["^libs\.thumbs\.ImageWithThumbsField"])
+], ["^thumbs\.thumbs\.ImageWithThumbsField"])
 """
 End South Introspection rules
 """
