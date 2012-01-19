@@ -1,10 +1,45 @@
 # -*- encoding: utf-8 -*-
 from django.db.models import ImageField
 from django.db.models.fields.files import ImageFieldFile
-from PIL import Image
+from django.core.files.images import ImageFile
 from django.core.files.base import ContentFile
-import cStringIO
+from django.core.files.temp import NamedTemporaryFile
 
+import cStringIO
+from PIL import Image
+from PIL import ImageOps
+
+
+def resize_and_crop(image, width, height, vert, horz):
+    """
+    Allows you to resize and crop an image from within a save function in a model.
+    
+    Parameters:
+    ===========
+    image   the image we are wanting to crop and resize
+    
+    width   the width of the final image
+    
+    height  the height of the final image
+    
+    vert    the position of the crop vertically 0 for top, 0.5 for middle, 1 for bottom
+    
+    horz    the position of the crop vertically 0 for left, 0.5 for middle, 1 for right
+    """
+    
+    image = Image.open(image)
+    
+    if image.mode not in ('L', 'RGB'):
+        image = image.convert('RGB')
+
+    image = ImageOps.fit(image, (width, height), Image.ANTIALIAS, 0, (horz, vert))
+
+    image_temp = NamedTemporaryFile(suffix='.png', prefix='', delete=True)
+    image.save(image_temp, 'PNG', optimize=True, dpi=(72, 72))
+
+    image = ImageFile(image_temp)
+
+    return image
 
 
 def generate_thumb(img, thumb_size, format):
@@ -25,30 +60,13 @@ def generate_thumb(img, thumb_size, format):
     image = Image.open(img)
     
     # Convert to RGB if necessary
-    if image.mode not in ('L', 'RGB', 'RGBA'):
+    if image.mode not in ('L', 'RGB'):
         image = image.convert('RGB')
         
     # get size
     thumb_w, thumb_h = thumb_size
-    # If you want to generate a square thumbnail
-    if thumb_w == thumb_h:
-        # quad
-        xsize, ysize = image.size
-        # get minimum size
-        minsize = min(xsize,ysize)
-        # largest square possible in the image
-        xnewsize = (xsize-minsize)/2
-        ynewsize = (ysize-minsize)/2
-        # crop it
-        image2 = image.crop((xnewsize, ynewsize, xsize-xnewsize, ysize-ynewsize))
-        # load is necessary after crop                
-        image2.load()
-        # thumbnail of the cropped image (with ANTIALIAS to make it look better)
-        image2.thumbnail(thumb_size, Image.ANTIALIAS)
-    else:
-        # not quad
-        image2 = image
-        image2.thumbnail(thumb_size, Image.ANTIALIAS)
+    
+    image = ImageOps.fit(image, (thumb_w, thumb_h), Image.ANTIALIAS, 0, (0.5, 0.5))
     
     io = cStringIO.StringIO()
     # PNG and GIF are the same, JPG is JPEG
