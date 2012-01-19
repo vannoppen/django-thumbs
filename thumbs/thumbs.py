@@ -73,7 +73,8 @@ def generate_thumb(img, thumb_size, format):
     if format.upper()=='JPG':
         format = 'JPEG'
     
-    image2.save(io, format)
+    # Fix to force save as PNG, optimize and lower DPI, this is the internet!
+    image2.save(io, 'PNG', optimize=True, dpi=(72, 72))
     return ContentFile(io.getvalue())    
 
 class ImageWithThumbsFieldFile(ImageFieldFile):
