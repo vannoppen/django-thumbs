@@ -27,17 +27,19 @@ def resize_and_crop(image, width, height, vert, horz):
     horz    the position of the crop vertically 0 for left, 0.5 for middle, 1 for right
     """
     
-    image = Image.open(image)
+    image2 = Image.open(image)
+
+    if image2.size != (width, height):
     
-    if image.mode not in ('L', 'RGB'):
-        image = image.convert('RGB')
+        if image2.mode not in ('L', 'RGB'):
+            image2 = image2.convert('RGB')
 
-    image = ImageOps.fit(image, (width, height), Image.ANTIALIAS, 0, (horz, vert))
+        image2 = ImageOps.fit(image2, (width, height), Image.ANTIALIAS, 0, (horz, vert))
 
-    image_temp = NamedTemporaryFile(suffix='.png', prefix='', delete=True)
-    image.save(image_temp, 'PNG', dpi=(72, 72))
+        image_temp = NamedTemporaryFile(suffix='.png', prefix='', delete=True)
+        image2.save(image_temp, 'PNG', dpi=(72, 72))
 
-    image = ImageFile(image_temp)
+        image = ImageFile(image_temp)
 
     return image
 
