@@ -66,7 +66,7 @@ def generate_thumb(img, thumb_size, format):
     # get size
     thumb_w, thumb_h = thumb_size
     
-    image = ImageOps.fit(image, (thumb_w, thumb_h), Image.ANTIALIAS, 0, (0.5, 0.5))
+    image2 = ImageOps.fit(image, (thumb_w, thumb_h), Image.ANTIALIAS, 0, (0.5, 0.5))
     
     io = cStringIO.StringIO()
     # PNG and GIF are the same, JPG is JPEG
