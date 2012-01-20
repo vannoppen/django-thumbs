@@ -35,7 +35,7 @@ def resize_and_crop(image, width, height, vert, horz):
     image = ImageOps.fit(image, (width, height), Image.ANTIALIAS, 0, (horz, vert))
 
     image_temp = NamedTemporaryFile(suffix='.png', prefix='', delete=True)
-    image.save(image_temp, 'PNG', optimize=True, dpi=(72, 72))
+    image.save(image_temp, 'PNG', dpi=(72, 72))
 
     image = ImageFile(image_temp)
 
@@ -73,8 +73,8 @@ def generate_thumb(img, thumb_size, format):
     if format.upper()=='JPG':
         format = 'JPEG'
     
-    # Fix to force save as PNG, optimize and lower DPI, this is the internet!
-    image2.save(io, 'PNG', optimize=True, dpi=(72, 72))
+    # Fix to force save as PNG.
+    image2.save(io, 'PNG', dpi=(72, 72))
     return ContentFile(io.getvalue())    
 
 class ImageWithThumbsFieldFile(ImageFieldFile):
