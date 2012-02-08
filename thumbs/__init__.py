@@ -153,7 +153,7 @@ add_introspection_rules([
             "sizes": ["sizes", {}],
         },
     ),
-], ["^thumbs\.thumbs\.ImageWithThumbsField"])
+], ["^thumbs\.ImageWithThumbsField"])
 """
 End South Introspection rules
 """
