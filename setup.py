@@ -1,26 +1,27 @@
+#!/usr/bin/env python
+# -*- encoding: utf-8 -*-
+# -*- mode: python -*-
+# vi: set ft=python :
+
+
 import os
 from setuptools import setup, find_packages
 
-README_PATH = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'README.md')
 
-description = 'Easy image thumbnails in Django.'
-
-if os.path.exists(README_PATH):
-    long_description = open(README_PATH).read()
-else:
-    long_description = description
+README_PATH = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'README')
+DESCRIPTION = 'Easy image thumbnails in Django.'
+if os.path.exists(README_PATH): LONG_DESCRIPTION = open(README_PATH).read()
+else: LONG_DESCRIPTION = DESCRIPTION
 
 
 setup(
     name='django-thumbs',
-    version='1.0.0',
-    install_requires=[
-        'django >= 1.2'
-    ],
-    description=description,
-    long_description=long_description,
-    author='VanNoppen',
+    version='2.0.0',
+    install_requires=['django >= 1.3'],
+    description=DESCRIPTION,
+    long_description=LONG_DESCRIPTION,
+    author='VanNoppen Marketing',
     author_email='dev@vannoppen.com',
-    url='http://github.com/vannoppen/django-vannoppen/',
+    url='https://github.com/vannoppen/django-thumbs/',
     packages=['thumbs'],
 )

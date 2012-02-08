@@ -1,0 +1,11 @@
+# setuptools
+build/
+dist/
+django_thumbs.egg-info/
+
+# vagrant
+.vagrant
+Vagrantfile
+
+# python
+*.pyc
