@@ -1,7 +1,8 @@
 # django-thumbs
 
-This has become a branch off of the original thumbs project. If you are looking
-for the original django-thumbs project you can find it on [Google Code][1].
+This has become a branch off of the original thumbs project adding in South
+support and a few other nice improvements. If you are looking for the original
+django-thumbs project you can find it on [Google Code][1].
 
 [1]: http://code.google.com/p/django-thumbs/ "django-thumbs on Google Code"
 
@@ -13,6 +14,7 @@ versions of all requirements.
 
   + Django
   + PIL
+  + South
 
 
 ## ImageWithThumbsField Usage

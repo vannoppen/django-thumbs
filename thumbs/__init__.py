@@ -1,4 +1,7 @@
+#!/usr/bin/env python
 # -*- encoding: utf-8 -*-
+# -*- mode: python -*-
+# vi: set ft=python :
 
 
 """ django-thumbs
